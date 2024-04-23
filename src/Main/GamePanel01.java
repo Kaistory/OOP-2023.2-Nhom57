@@ -80,6 +80,7 @@ package Main;
 
 import Background.BackgroundManager;
 import SpaceObject.Asteroid;
+import SpaceShip.SpaceShips;
 
 import javax.swing.*;
 import java.awt.*;
@@ -102,6 +103,15 @@ public class GamePanel01 extends JPanel implements Runnable {
     private List<Asteroid> asteroids;
     private BackgroundManager backgroundManager;
     private Thread gameThread;
+    KeyHandler keyH = new KeyHandler();
+    SpaceShips player = new SpaceShips(this,keyH);
+
+    //Set player's default position
+    int playerX = 100;
+    int playerY = 100;
+    int playerSpeed = 5;
+
+
 
     public GamePanel01() {
         // Khởi tạo danh sách thiên thạch
@@ -114,6 +124,8 @@ public class GamePanel01 extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.RED);
         this.setDoubleBuffered(true);
+        this.addKeyListener(keyH);
+        this.setFocusable(true);
     }
 
     public void startGameThread() {
@@ -125,21 +137,40 @@ public class GamePanel01 extends JPanel implements Runnable {
     public void run() {
         double drawInterval = 1000000000 / FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
+        long lastTime = System.nanoTime();
+        double delta = 0;
+        long timer=0;
+        long drawCount = 0;
+
 
         while (gameThread != null) {
             long currentTime = System.nanoTime();
+            delta += (currentTime - lastTime)/drawInterval;
+            timer += (currentTime - lastTime);
+            lastTime=currentTime;
 
             // Tạo thiên thạch mới sau một khoảng thời gian
             if (currentTime >= nextAsteroidTime) {
                 createAsteroid();
                 nextAsteroidTime = currentTime + asteroidInterval;
             }
+            if(delta >= 1) {
+                //Update information such as player positions
+                update();
+                // Cập nhật vị trí của các thiên thạch
+                updateAsteroids();
 
-            // Cập nhật vị trí của các thiên thạch
-            updateAsteroids();
+                // Vẽ lại màn hình
+                repaint();
+                delta--;
+                drawCount++;
+            }
+            if(timer >= 1000000000){
+                System.out.println("FPS: " + drawCount);
+                drawCount=0;
+                timer=0;
+            }
 
-            // Vẽ lại màn hình
-            repaint();
 
             try {
                 double remainingTime = nextDrawTime - System.nanoTime();
@@ -155,6 +186,10 @@ public class GamePanel01 extends JPanel implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void update(){
+        player.update();
     }
 
     private long nextAsteroidTime = System.nanoTime(); // Thời điểm tạo thiên thạch tiếp theo
@@ -186,10 +221,11 @@ public class GamePanel01 extends JPanel implements Runnable {
 
         // Vẽ nền và các thiên thạch
         backgroundManager.draw(g2);
+
         for (Asteroid asteroid : asteroids) {
             asteroid.draw(g2);
         }
-
+        player.draw(g2);
         g2.dispose();
     }
 }
