@@ -37,16 +37,16 @@ public class SpaceShips extends SpaceObject {
     }
 
     public void update() {
-        if (keyH.upPressed == true){
+        if (keyH.upPressed == true && y > 0){
             y -= speed;
         }
-        else if (keyH.downPressed == true){
+        else if (keyH.downPressed == true && y <= gp.getHeight() - gp.tileSize ){
             y += speed;
         }
-        else if (keyH.leftPressed == true){
+        else if (keyH.leftPressed == true && x >= 0){
             x -= speed;
         }
-        else if (keyH.righgtPressed == true){
+        else if (keyH.righgtPressed == true && x <= gp.getWidth() - gp.tileSize){
             x += speed;
         }
     }
