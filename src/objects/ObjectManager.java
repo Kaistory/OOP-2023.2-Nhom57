@@ -44,7 +44,7 @@ public class ObjectManager {
 	
 	public void addEnemy() {
 		int yPos = 120;
-		int sizeEnemy = 10;
+		int sizeEnemy = 2;
 		while(potions.size() < sizeEnemy && yPos < Game.GAME_HEIGHT - 200) {
 			Random ramdom = new Random();
 			int xDefault = 0;//ramdom.nextInt(0, 50);

@@ -38,10 +38,10 @@ public class PauseOverlay {
 	}
 
 	private void createUrmButtons() {
-		int menuX = (int) (313 * Game.SCALE);
+		int menuX = (int) ((330 - 200) * Game.SCALE);
 		int replayX = (int) (387 * Game.SCALE);
-		int unpauseX = (int) (462 * Game.SCALE);
-		int bY = (int) (325 * Game.SCALE);
+		int unpauseX = (int) ((445 + 200) * Game.SCALE);
+		int bY = (int) (350 * Game.SCALE);
 
 		menuB = new UrmButton(menuX, bY, URM_SIZE, URM_SIZE, 2);
 		replayB = new UrmButton(replayX, bY, URM_SIZE, URM_SIZE, 1);
@@ -50,11 +50,11 @@ public class PauseOverlay {
 	}
 
 	private void createSoundButtons() {
-		int soundX = (int) (450 * Game.SCALE);
-		int musicY = (int) (140 * Game.SCALE);
-		int sfxY = (int) (186 * Game.SCALE);
-		musicButton = new SoundButton(soundX, musicY, SOUND_SIZE, SOUND_SIZE);
-		sfxButton = new SoundButton(soundX, sfxY, SOUND_SIZE, SOUND_SIZE);
+		int soundY = (int) (225 * Game.SCALE);
+		int musicX = (int) (350 * Game.SCALE);
+		int sfxX = (int) (450 * Game.SCALE);
+		musicButton = new SoundButton(musicX, soundY, SOUND_SIZE, SOUND_SIZE);
+		sfxButton = new SoundButton(sfxX, soundY, SOUND_SIZE, SOUND_SIZE);
 
 	}
 
@@ -82,7 +82,7 @@ public class PauseOverlay {
 
 	public void draw(Graphics g) {
 		// Background
-		g.drawImage(backgroundImg, bgX, bgY, bgW, bgH, null);
+		//g.drawImage(backgroundImg, bgX, bgY, bgW, bgH, null);
 
 		// Sound buttons
 		musicButton.draw(g);

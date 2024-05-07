@@ -149,7 +149,7 @@ public class Playing extends State implements Statemethods {
 			{
 			if (e.getButton() == MouseEvent.BUTTON1)
 				{
-					player.powerAttack();
+					player.powerAttack(20);
 				}
 			}
 				
@@ -178,11 +178,21 @@ public class Playing extends State implements Statemethods {
 				break;
 			case KeyEvent.VK_J:
 				
-				player.powerAttack();
+				player.powerAttack(20);
 				if(player.getPowerAttackActive() == false)
 					{
 						objectManager.addBullet((int)player.getHitbox().x - 35,(int)player.getHitbox().y, 1);
 						player.setAttacking(true);
+					}
+				break;
+			case KeyEvent.VK_K:
+				
+				player.powerAttack(40);
+				if(player.getPowerAttackActive() == false)
+					{
+						objectManager.addBullet((int)player.getHitbox().x - 15,(int)player.getHitbox().y, 1);
+						objectManager.addBullet((int)player.getHitbox().x - 55,(int)player.getHitbox().y, 1);
+						player.setDoubleattacking(true);
 					}
 				break;
 			case KeyEvent.VK_ESCAPE:

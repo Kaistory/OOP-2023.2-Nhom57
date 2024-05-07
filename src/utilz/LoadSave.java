@@ -19,7 +19,7 @@ public class LoadSave {
 	public static final String PLAYER_ATLAS = "player_ship.png";
 	public static final String LEVEL_ATLAS = "outside_sprites.png";
 	public static final String LEVEL_ONE_DATA = "level_2.1_data.png";
-	public static final String MENU_BUTTONS = "button_atlas.png";
+	public static final String MENU_BUTTONS = "button_atlas_ship.png";
 	public static final String MENU_BACKGROUND = "menu_background.png";
 	public static final String PAUSE_BACKGROUND = "pause_menu.png";
 	public static final String SOUND_BUTTONS = "sound_button.png";
@@ -34,8 +34,8 @@ public class LoadSave {
 	public static final String CONTAINER_ATLAS = "objects_sprites.png";
 	public static final String CANNON_ATLAS = "cannon_atlas.png";
 	public static final String CANNON_BALL = "59.png";
-	public static final String COMPLETED_IMG = "completed_sprite.png";
-	public static final String DEATH_SCREEN = "death_screen.png";
+	public static final String COMPLETED_IMG = "completed_sprite_ship1.png";
+	public static final String DEATH_SCREEN = "death_screen_ship.png";
 	public static final String STATUS_BAR = "health_power_bar_ship.png";
 	
 	public static BufferedImage GetSpriteAtlas(String fileName) {

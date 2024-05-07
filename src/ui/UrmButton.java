@@ -35,7 +35,7 @@ public class UrmButton extends PauseButton {
 	}
 
 	public void draw(Graphics g) {
-		System.out.println(index);
+		
 		g.drawImage(imgs[index], x, y, URM_SIZE, URM_SIZE, null);
 	}
 

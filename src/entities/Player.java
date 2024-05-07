@@ -17,7 +17,10 @@ public class Player extends Entity {
 	private BufferedImage[][] animations;
 	private int aniTick, aniIndex, aniSpeed = 25;
 	private int playerAction = IDLE;
-	private boolean moving = false, attacking = false;
+	private boolean moving = false, attacking = false,doubleattacking = false;
+	public void setDoubleattacking(boolean doubleattacking) {
+		this.doubleattacking = doubleattacking;
+	}
 	private boolean left, up, right, down, jump;
 	private float playerSpeed = 1.0f * Game.SCALE;
 	private int[][] lvlData;
@@ -148,6 +151,7 @@ public class Player extends Entity {
 			if (aniIndex >= GetSpriteAmount(playerAction)) {
 				aniIndex = 0;
 				attacking = false;
+				doubleattacking = false;
 			}
 
 		}
@@ -170,6 +174,8 @@ public class Player extends Entity {
 //
 		if (attacking)
 			playerAction = ATTACK_1;
+		if (doubleattacking)
+			playerAction = ATTACK_DOUBLE;
 
 		if (startAni != playerAction)
 			resetAniTick();
@@ -335,11 +341,11 @@ public class Player extends Entity {
 	public Player getPlayer() {
 		return player;
 	}
-	public void powerAttack() {
+	public void powerAttack(int value) {
 //		if(powerAttackActive)
 //			return;
 		
-		if (powerValue >= 20) {
+		if (powerValue >= value) {
 			powerAttackActive = false;
 			changePower(-10);
 			System.out.println(1);
