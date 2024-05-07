@@ -23,7 +23,7 @@ public class GameWindow {
 
 			@Override
 			public void windowLostFocus(WindowEvent e) {
-				//gamePanel.getGame().windowFocusLost();
+				gamePanel.getGame().windowFocusLost();
 			}
 
 			@Override
@@ -34,4 +34,5 @@ public class GameWindow {
 		});
 
 	}
+
 }
