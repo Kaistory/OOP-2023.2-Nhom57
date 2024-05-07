@@ -40,19 +40,19 @@ public class Player extends Entity {
 
 		private int statusBarWidth = (int) (192 * Game.SCALE);
 		private int statusBarHeight = (int) (58 * Game.SCALE);
-		private int statusBarX = (int) (10 * Game.SCALE);
-		private int statusBarY = (int) (10 * Game.SCALE);
+		private int statusBarX = (int) (0 * Game.SCALE);
+		private int statusBarY = (int) (0 * Game.SCALE);
 
-		private int healthBarWidth = (int) (150 * Game.SCALE);
-		private int healthBarHeight = (int) (4 * Game.SCALE);
-		private int healthBarXStart = (int) (34 * Game.SCALE);
+		private int healthBarWidth = (int) (100 * Game.SCALE);
+		private int healthBarHeight = (int) (20 * Game.SCALE);
+		private int healthBarXStart = (int) (50 * Game.SCALE);
 		private int healthBarYStart = (int) (14 * Game.SCALE);
 		private int healthWidth = healthBarWidth;
 
-		private int powerBarWidth = (int) (104 * Game.SCALE);
-		private int powerBarHeight = (int) (2 * Game.SCALE);
-		private int powerBarXStart = (int) (44 * Game.SCALE);
-		private int powerBarYStart = (int) (34 * Game.SCALE);
+		private int powerBarWidth = (int) (63 * Game.SCALE);
+		private int powerBarHeight = (int) (7 * Game.SCALE);
+		private int powerBarXStart = (int) (51 * Game.SCALE);
+		private int powerBarYStart = (int) (36 * Game.SCALE);
 		private int powerWidth = powerBarWidth;
 		private int powerMaxValue = 200;
 		private int powerValue = powerMaxValue;
@@ -127,16 +127,18 @@ public class Player extends Entity {
 
 	private void drawUI(Graphics g) {
 		
-		//Background
-		g.drawImage(statusBarImg, statusBarX, statusBarY, statusBarWidth, statusBarHeight, null);
-		
 		//health
-		g.setColor(Color.red);
-		g.fillRect(healthBarXStart + statusBarX, healthBarYStart + statusBarY, healthWidth, healthBarHeight);
+				g.setColor(new Color(13, 222, 244));
+				g.fillRect(healthBarXStart + statusBarX, healthBarYStart + statusBarY, healthWidth, healthBarHeight);
+	
 	
 		//power
 		g.setColor(Color.yellow);
 		g.fillRect(powerBarXStart + statusBarX, powerBarYStart + statusBarY, powerWidth, powerBarHeight);
+		
+		//Background
+				g.drawImage(statusBarImg, statusBarX, statusBarY, statusBarWidth, statusBarHeight, null);
+				
 	}
 	private void updateAnimationTick() {
 		aniTick++;
@@ -241,10 +243,10 @@ public class Player extends Entity {
 
 		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
 
-		animations = new BufferedImage[9][6];
+		animations = new BufferedImage[4][6];
 		for (int j = 0; j < animations.length; j++)
 			for (int i = 0; i < animations[j].length; i++)
-				animations[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
+				animations[j][i] = img.getSubimage(j * 192, 1034 - (i+1) * 172, 192, 172);
 		
 		statusBarImg = LoadSave.GetSpriteAtlas(LoadSave.STATUS_BAR);
 	}

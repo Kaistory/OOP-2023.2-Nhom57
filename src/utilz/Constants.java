@@ -147,24 +147,19 @@ public class Constants {
 	public static class PlayerConstants {
 		public static final int IDLE = 0;
 		public static final int RUNNING = 1;
-		public static final int JUMP = 2;
-		public static final int FALLING = 3;
+
 		public static final int GROUND = 4;
-		public static final int ATTACK_1 = 6;
+		public static final int ATTACK_1 = 3;
 		public static final int DEAD = 5;
 
 		public static int GetSpriteAmount(int player_action) {
 			switch (player_action) {
 			case RUNNING:
-				return 6;
-			case IDLE:
 				return 5;
-			case JUMP:
+			case IDLE:
+				return 6;
 			case ATTACK_1:
-				return 3;
-			case GROUND:
-				return 2;
-			case FALLING:
+				return 4;
 			case DEAD:
 				return 4;
 			default:

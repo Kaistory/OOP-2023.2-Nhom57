@@ -144,7 +144,7 @@ public class ObjectManager {
 				b.updatePos();
 				if(b.getHitbox().intersects(player.getHitbox()) && b.getDir() == -1) {
 					b.setActive(false);
-					player.changeHealth(-25);
+					player.changeHealth(-20);
 				}
 				for(Potion p : potions)
 				if(b.getHitbox().intersects(p.getHitbox()) && p.isActive() && b.getDir() == 1) {

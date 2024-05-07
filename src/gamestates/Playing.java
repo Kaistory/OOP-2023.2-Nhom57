@@ -116,9 +116,9 @@ public class Playing extends State implements Statemethods {
 		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
 
 		
-		drawClouds(g);
+//		drawClouds(g);
 
-		levelManager.draw(g, xLvlOffset);
+//		levelManager.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
 		enemyManager.draw(g, xLvlOffset);
 		objectManager.draw(g, xLvlOffset);
@@ -181,7 +181,7 @@ public class Playing extends State implements Statemethods {
 				player.powerAttack();
 				if(player.getPowerAttackActive() == false)
 					{
-						objectManager.addBullet((int)player.getHitbox().x,(int)player.getHitbox().y, 1);
+						objectManager.addBullet((int)player.getHitbox().x - 35,(int)player.getHitbox().y, 1);
 						player.setAttacking(true);
 					}
 				break;
