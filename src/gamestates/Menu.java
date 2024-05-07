@@ -19,7 +19,7 @@ public class Menu extends State implements Statemethods {
 		super(game);
 		loadButtons();
 		loadBackground();
-		
+		backgroundImgPink = LoadSave.GetSpriteAtlas(LoadSave.MENU_BACKGROUND_IMG);
 
 	}
 
@@ -27,11 +27,8 @@ public class Menu extends State implements Statemethods {
 		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.MENU_BACKGROUND);
 		menuWidth = (int) (backgroundImg.getWidth() * Game.SCALE);
 		menuHeight = (int) (backgroundImg.getHeight() * Game.SCALE);
-		menuX = 50;
-		menuY = (int) (10 * Game.SCALE);
-//		menuX = Game.GAME_WIDTH / 2 - menuWidth / 2;
-//		menuY = (int) (45 * Game.SCALE);
-		backgroundImgPink = LoadSave.GetSpriteAtlas(LoadSave.MENU_BACKGROUND_IMG);
+		menuX = Game.GAME_WIDTH / 2 - menuWidth / 2;
+		menuY = (int) (45 * Game.SCALE);
 
 	}
 
@@ -51,7 +48,7 @@ public class Menu extends State implements Statemethods {
 	public void draw(Graphics g) {
 
 		g.drawImage(backgroundImgPink, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
-		//g.drawImage(backgroundImg, menuX, menuY, menuWidth, menuHeight, null);
+		g.drawImage(backgroundImg, menuX, menuY, menuWidth, menuHeight, null);
 
 		for (MenuButton mb : buttons)
 			mb.draw(g);

@@ -37,6 +37,7 @@ public class LoadSave {
 	public static final String COMPLETED_IMG = "completed_sprite_ship1.png";
 	public static final String DEATH_SCREEN = "death_screen_ship.png";
 	public static final String STATUS_BAR = "health_power_bar_ship.png";
+	public static final String OPTIONS_MENU = "options_background.png";
 	
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;
