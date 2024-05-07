@@ -11,6 +11,7 @@ public class LevelManager {
 	private Game game;
 	private BufferedImage[] levelSprite;
 	private Level levelOne;
+	private int lvlIndex = 0;
 
 	public LevelManager(Game game) {
 		this.game = game;
@@ -43,5 +44,7 @@ public class LevelManager {
 	public Level getCurrentLevel() {
 		return levelOne;
 	}
-
+	public int getLevelIndex() {
+		return lvlIndex;
+	}
 }

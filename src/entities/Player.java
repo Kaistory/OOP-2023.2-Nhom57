@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+import audio.AudioPlayer;
 import gamestates.Playing;
 import main.Game;
 import utilz.LoadSave;
@@ -91,6 +92,8 @@ public class Player extends Entity {
 //				aniIndex = 0;
 //				playing.setPlayerDying(true);
 //			} else if(aniTick == GetSpriteAmount(DEAD) - 1 && aniTick >= 24) {
+				playing.getGame().getAudioPlayer().stopSong();
+				playing.getGame().getAudioPlayer().playEffect(AudioPlayer.GAMEOVER);
 				playing.setGameOver(true);
 //			}
 //			else updateAnimationTick();
@@ -173,9 +176,15 @@ public class Player extends Entity {
 //		}
 //
 		if (attacking)
-			playerAction = ATTACK_1;
+			{
+				playerAction = ATTACK_1;
+				playing.getGame().getAudioPlayer().playAttackSound();
+			}
 		if (doubleattacking)
-			playerAction = ATTACK_DOUBLE;
+			{
+				playerAction = ATTACK_DOUBLE;
+				playing.getGame().getAudioPlayer().playAttackSound();
+			}
 
 		if (startAni != playerAction)
 			resetAniTick();

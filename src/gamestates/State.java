@@ -2,6 +2,7 @@ package gamestates;
 
 import java.awt.event.MouseEvent;
 
+import audio.AudioPlayer;
 import main.Game;
 import ui.MenuButton;
 
@@ -18,6 +19,16 @@ public class State {
 	}
 	
 
+	@SuppressWarnings("incomplete-switch")
+	public void setGamestate(Gamestate state) {
+		switch (state) {
+		case MENU -> game.getAudioPlayer().playSong(AudioPlayer.MENU_1);
+		case PLAYING -> game.getAudioPlayer().setLevelSong(game.getPlaying().getLevelManager().getLevelIndex());
+		}
+
+		Gamestate.state = state;
+	}
+	
 	public Game getGame() {
 		return game;
 	}

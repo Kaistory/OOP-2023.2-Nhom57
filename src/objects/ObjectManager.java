@@ -43,12 +43,12 @@ public class ObjectManager {
 	}
 	
 	public void addEnemy() {
-		int yPos = 120;
-		int sizeEnemy = 2;
+		int yPos = 0;
+		int sizeEnemy = 30;
 		while(potions.size() < sizeEnemy && yPos < Game.GAME_HEIGHT - 200) {
 			Random ramdom = new Random();
 			int xDefault = 0;//ramdom.nextInt(0, 50);
-			int size =  ramdom.nextInt(3, 5);
+			int size =  ramdom.nextInt(3, 6);
 			int xPos, type;
 			for(int i = 0; i < size; i++) {
 				if(xDefault >= Game.GAME_WIDTH - 900 || potions.size() >= sizeEnemy)

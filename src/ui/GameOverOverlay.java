@@ -97,7 +97,7 @@ public class GameOverOverlay {
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			playing.resetAll();
-			Gamestate.state = Gamestate.MENU;
+			
 		}
 	}
 
@@ -120,10 +120,14 @@ public class GameOverOverlay {
 			if (menu.isMousePressed()) {
 				playing.resetAll();
 				Gamestate.state = Gamestate.MENU;
+				playing.setGamestate(Gamestate.MENU);
 			}
 		} else if (isIn(play, e))
 			if (play.isMousePressed())
-				playing.resetAll();
+				{
+					playing.resetAll();
+					playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+				}
 
 		menu.resetBools();
 		play.resetBools();

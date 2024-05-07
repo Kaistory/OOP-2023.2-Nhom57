@@ -311,5 +311,12 @@ public class Playing extends State implements Statemethods {
 	
 	public void setComplete(boolean lvlComplete) {
 		this.lvlCompleted = lvlComplete;
+		if(lvlComplete)
+			game.getAudioPlayer().lvlCompleted();
+	}
+
+	public LevelManager getLevelManager() {
+		// TODO Auto-generated method stub
+		return levelManager;
 	}
 }
