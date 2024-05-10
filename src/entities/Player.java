@@ -339,7 +339,7 @@ public class Player extends Entity {
 		moving = false;
 		state = IDLE;
 		currentHealth = maxHealth;
-
+		powerValue = powerMaxValue;
 		hitbox.x = x;
 		hitbox.y = y;
 
@@ -350,14 +350,14 @@ public class Player extends Entity {
 	public Player getPlayer() {
 		return player;
 	}
+	
+	public Playing getPlaying() {
+		return playing;
+	}
 	public void powerAttack(int value) {
-//		if(powerAttackActive)
-//			return;
-		
 		if (powerValue >= value) {
 			powerAttackActive = false;
 			changePower(-10);
-			System.out.println(1);
 		}
 		else {
 			powerAttackActive = true;

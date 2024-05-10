@@ -16,26 +16,15 @@ import static utilz.Constants.ObjectConstants.*;
 
 public class ObjectManager {
 	private Playing playing;
-	private BufferedImage[][] potionImgs, containerImgs;
-	private BufferedImage[] cannonImgs;
+	private BufferedImage[][] potionImgs;
 	private BufferedImage cannonBallImg;
 	private ArrayList<Potion> potions;
-	private ArrayList<GameContainer> containers;
 	private ArrayList<Bullet> bullets;
-	private ArrayList<Cannon> cannons;
 	
 	public ObjectManager(Playing playing) {
 		this.playing = playing;
-//		currentLevel = playing.getLevelManager().getCurrentLevel();
 		loadImgs();
-		
 		potions  = new ArrayList<>();
-		
-		
-		containers = new ArrayList<>();
-		
-		
-		cannons = new ArrayList<>();
 		
 		
 		bullets = new ArrayList<Bullet>();
@@ -44,7 +33,7 @@ public class ObjectManager {
 	
 	public void addEnemy() {
 		int yPos = 0;
-		int sizeEnemy = 30;
+		int sizeEnemy = 20;
 		while(potions.size() < sizeEnemy && yPos < Game.GAME_HEIGHT - 200) {
 			Random ramdom = new Random();
 			int xDefault = 0;//ramdom.nextInt(0, 50);
@@ -62,17 +51,7 @@ public class ObjectManager {
 				
 			}
 			yPos += 75;
-		}
-		
-//		potions.add(new Potion(600, 200, RED_POTION));
-//		potions.add(new Potion(700, 200, BLUE_POTION));
-		
-//		containers.add(new GameContainer(500, 300, BARREL));
-//		containers.add(new GameContainer(600, 300, BARREL));
-		
-		
-		
-		cannons.add(new Cannon(700, 300, 5));
+		}	
 	}
 	
 	public void checkObjectTouched(java.awt.geom.Rectangle2D.Float hitbox) {
@@ -80,17 +59,10 @@ public class ObjectManager {
 			if (p.isActive()) {
 				if (hitbox.intersects(p.getHitbox())) {
 					p.setActive(false);
-					applyEffectToPlayer(p);
 				}
 			}
 	}
-	
-	public void applyEffectToPlayer(Potion p) {
-//		if (p.getObjType() == RED_POTION)
-//			playing.getPlayer().changeHealth(RED_POTION_VALUE);
-//		else
-//			playing.getPlayer().changePower(BLUE_POTION_VALUE);
-	}
+
 	
 	
 	private void loadImgs() {
@@ -99,24 +71,7 @@ public class ObjectManager {
 
 		for (int j = 0; j < potionImgs.length; j++)
 			for (int i = 0; i < potionImgs[j].length; i++)
-				potionImgs[j][i] = potionSprite.getSubimage(200 * j, 200 * i, 200, 200);
-		
-
-		
-		BufferedImage containerSprite = LoadSave.GetSpriteAtlas(LoadSave.CONTAINER_ATLAS);
-		containerImgs = new BufferedImage[2][8];
-
-		for (int j = 0; j < containerImgs.length; j++)
-			for (int i = 0; i < containerImgs[j].length; i++)
-				containerImgs[j][i] = containerSprite.getSubimage(40 * i, 30 * j, 40, 30);
-		
-		cannonImgs = new BufferedImage[7];
-		BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.CANNON_ATLAS);
-
-		for (int i = 0; i < cannonImgs.length; i++)
-			cannonImgs[i] = temp.getSubimage(i * 40, 0, 40, 26);
-
-		
+				potionImgs[j][i] = potionSprite.getSubimage(200 * j, 200 * i, 200, 200);		
 		cannonBallImg = LoadSave.GetSpriteAtlas(LoadSave.CANNON_BALL);
 	}
 	
@@ -127,13 +82,13 @@ public class ObjectManager {
 				p.update();
 			if(p.getAniIndex() == 4  && p.getAniTick() == 0)
 				bullets.add(new Bullet((int)p.getHitbox().x - 10, (int)p.getHitbox().y, -1));
+			if(p.getHitbox().intersects(player.getHitbox())) {
+				p.setActive(false);
+				player.changeHealth(-20);
+			}
 		}
 		}
-		
-		for(GameContainer gc : containers) {
-			if(gc.isActive())
-				gc.update();
-		}
+
 		updateBullet(lvlData, player);
 
 	}
@@ -159,21 +114,10 @@ public class ObjectManager {
 	
 	public void draw(Graphics g, int xLvlOffset) {
 		drawPotion(g, xLvlOffset);
-		drawContainer(g, xLvlOffset);
 		drawBullet(g, xLvlOffset);
 		
 	}
-	private void drawContainer(Graphics g, int xLvlOffset) {
 
-		for (GameContainer gc : containers)
-			if (gc.isActive()) {
-				int type = 0;
-				if (gc.getObjType() == BARREL)
-					type = 1;
-				g.drawImage(containerImgs[type][gc.getAniIndex()], (int) (gc.getHitbox().x - gc.getxDrawOffset() - xLvlOffset), (int) (gc.getHitbox().y - gc.getyDrawOffset()), CONTAINER_WIDTH,
-						CONTAINER_HEIGHT, null);
-			}
-	}
 	
 	private void drawPotion(Graphics g, int xLvlOffset) {
 		// TODO Auto-generated method stub
@@ -199,12 +143,7 @@ public class ObjectManager {
 		bullets.add(new Bullet(x, y, dir));
 	}
 	public void loadObjects() {
-		potions  = new ArrayList<>();
-		
-		containers = new ArrayList<>();
-		
-		cannons = new ArrayList<>();
-		
+		potions  = new ArrayList<>();		
 		bullets = new ArrayList<Bullet>();
 		bullets.clear();
 		addEnemy();
@@ -213,10 +152,6 @@ public class ObjectManager {
 		loadObjects();
 		for (Potion p : potions)
 			p.reset();
-		for (GameContainer gc : containers)
-			gc.reset();
-		for (Cannon c : cannons)
-			c.reset();
 		bullets.clear();
 		
 	}
