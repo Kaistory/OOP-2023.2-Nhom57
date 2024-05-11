@@ -11,7 +11,7 @@ public class LevelManager {
 	private Game game;
 	private BufferedImage[] levelSprite;
 	private Level levelOne;
-	private int lvlIndex = 0;
+	private int lvlIndex = 1;
 
 	public LevelManager(Game game) {
 		this.game = game;

@@ -3,6 +3,7 @@ package objects;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import javax.swing.plaf.synth.SynthScrollPaneUI;
@@ -18,23 +19,25 @@ import static utilz.Constants.ObjectConstants.*;
 public class ObjectManager {
 	private Playing playing;
 	private BufferedImage[][] potionImgs;
-	private BufferedImage cannonBallImg, enemyBallImg;
+	private BufferedImage cannonBallImg, enemyBallImg, powerImg;
 	private ArrayList<Potion> potions;
 	private ArrayList<Bullet> bullets;
+	private ArrayList<Power> powers;
 	
 	public ObjectManager(Playing playing) {
 		this.playing = playing;
 		loadImgs();
 		potions  = new ArrayList<>();
 		
+		bullets = new ArrayList<>();
 		
-		bullets = new ArrayList<Bullet>();
+		powers = new ArrayList<>();
 		addEnemy();
 	}
 	
 	public void addEnemy() {
 		int yPos = 0;
-		int sizeEnemy = 20;
+		int sizeEnemy = 10;
 		while(potions.size() < sizeEnemy && yPos < Game.GAME_HEIGHT - 200) {
 			Random ramdom = new Random();
 			int xDefault = 0;//ramdom.nextInt(0, 50);
@@ -75,9 +78,17 @@ public class ObjectManager {
 				potionImgs[j][i] = potionSprite.getSubimage(200 * j, 200 * i, 200, 200);		
 		cannonBallImg = LoadSave.GetSpriteAtlas(LoadSave.CANNON_BALL);
 		enemyBallImg = LoadSave.GetSpriteAtlas(LoadSave.CANNON_BALL_1);
+		powerImg = LoadSave.GetSpriteAtlas(LoadSave.POWER);
 	}
 	
 	public void update(int[][] lvlData, Player player) {
+		updatePotition(lvlData, player);
+		updateBullet(lvlData, player);
+		updatePower(lvlData, player);
+	}
+	
+	
+	private void updatePotition(int[][] lvlData, Player player) {
 		for(Potion p : potions) {
 			if(p.isActive()) {
 				
@@ -88,15 +99,14 @@ public class ObjectManager {
 				p.setActive(false);
 				playing.getGame().getAudioPlayer().playEffect(AudioPlayer.JUMP);
 				player.changeHealth(-20);
+				
 			}
 		}
 		}
-
-		updateBullet(lvlData, player);
-
 	}
 	
 	private void updateBullet(int[][] lvlData, Player player) {
+		Random random = new Random();
 		for(Bullet b : bullets) {
 			if(b.isActive()) {
 				b.updatePos();
@@ -107,21 +117,43 @@ public class ObjectManager {
 				}
 				for(Potion p : potions)
 				if(b.getHitbox().intersects(p.getHitbox()) && p.isActive() && b.getDir() == 1) {
+					if(random.nextInt(1,6) == 1)
+						powers.add(new Power((int)p.getHitbox().x - 10, (int)p.getHitbox().y, -1));
 					b.setActive(false);
 					p.setActive(false);
+					
 				}
 			}
 		}
 	}
 	
+	public void updatePower(int[][] lvlData, Player player) {
+		for(Power power : powers)
+		if(power.isActive())
+			{
+				power.updatePos();
+				if(power.getHitbox().intersects(player.getHitbox())) {
+					player.changeHealth(20);
+					power.setActive(false);
+					//playing.getGame().getAudioPlayer().playEffect(AudioPlayer.);
+				}
+			}
+	}
 	
 	
 	public void draw(Graphics g, int xLvlOffset) {
 		drawPotion(g, xLvlOffset);
 		drawBullet(g, xLvlOffset);
+		drawPower(g, xLvlOffset);
 		
 	}
 
+	private void drawPower(Graphics g, int xLvlOffset) {
+		for(Power power: powers)
+		if(power.isActive())
+			g.drawImage(powerImg, (int) (power.getHitbox().x  - xLvlOffset), (int) (power.getHitbox().y), POTION_WIDTH, POTION_HEIGHT,
+					null);
+	}
 	
 	private void drawPotion(Graphics g, int xLvlOffset) {
 		// TODO Auto-generated method stub

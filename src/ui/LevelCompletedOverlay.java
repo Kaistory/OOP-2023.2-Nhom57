@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import audio.AudioPlayer;
 import gamestates.Gamestate;
 import gamestates.Playing;
 import main.Game;
@@ -22,6 +23,7 @@ public class LevelCompletedOverlay {
 		this.playing = playing;
 		initImg();
 		initButtons();
+		
 	}
 
 	private void initButtons() {

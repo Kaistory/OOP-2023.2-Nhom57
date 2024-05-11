@@ -112,7 +112,9 @@ public class Playing extends State implements Statemethods {
 			g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
 			pauseOverlay.draw(g);
 		} else if (lvlCompleted)
-			levelCompletedOverlay.draw(g);
+			{
+				levelCompletedOverlay.draw(g);
+			}
 		else if (gameOver)
 			gameOverOverlay.draw(g);
 		
