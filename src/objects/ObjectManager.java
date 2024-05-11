@@ -17,7 +17,7 @@ import static utilz.Constants.ObjectConstants.*;
 public class ObjectManager {
 	private Playing playing;
 	private BufferedImage[][] potionImgs;
-	private BufferedImage cannonBallImg;
+	private BufferedImage cannonBallImg, enemyBallImg;
 	private ArrayList<Potion> potions;
 	private ArrayList<Bullet> bullets;
 	
@@ -73,6 +73,7 @@ public class ObjectManager {
 			for (int i = 0; i < potionImgs[j].length; i++)
 				potionImgs[j][i] = potionSprite.getSubimage(200 * j, 200 * i, 200, 200);		
 		cannonBallImg = LoadSave.GetSpriteAtlas(LoadSave.CANNON_BALL);
+		enemyBallImg = LoadSave.GetSpriteAtlas(LoadSave.CANNON_BALL_1);
 	}
 	
 	public void update(int[][] lvlData, Player player) {
@@ -134,8 +135,12 @@ public class ObjectManager {
 		// TODO Auto-generated method stub
 		for (Bullet b : bullets)
 			if (b.isActive()) {
+				if(b.getDir() == 1)
 				g.drawImage(cannonBallImg, (int) (b.getHitbox().x  - xLvlOffset), (int) (b.getHitbox().y), POTION_WIDTH, POTION_HEIGHT,
 						null);
+				else
+					g.drawImage(enemyBallImg, (int) (b.getHitbox().x  - xLvlOffset), (int) (b.getHitbox().y), POTION_WIDTH, POTION_HEIGHT,
+							null);
 			}		
 	}
 	public void addBullet(int x, int y, int dir) {
