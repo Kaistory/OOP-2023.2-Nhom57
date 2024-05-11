@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.swing.plaf.synth.SynthScrollPaneUI;
 
+import audio.AudioPlayer;
 import entities.Player;
 import gamestates.Playing;
 import main.Game;
@@ -85,6 +86,7 @@ public class ObjectManager {
 				bullets.add(new Bullet((int)p.getHitbox().x - 10, (int)p.getHitbox().y, -1));
 			if(p.getHitbox().intersects(player.getHitbox())) {
 				p.setActive(false);
+				playing.getGame().getAudioPlayer().playEffect(AudioPlayer.JUMP);
 				player.changeHealth(-20);
 			}
 		}
@@ -100,6 +102,7 @@ public class ObjectManager {
 				b.updatePos();
 				if(b.getHitbox().intersects(player.getHitbox()) && b.getDir() == -1) {
 					b.setActive(false);
+					playing.getGame().getAudioPlayer().playEffect(AudioPlayer.JUMP);
 					player.changeHealth(-20);
 				}
 				for(Potion p : potions)
