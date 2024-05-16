@@ -23,7 +23,9 @@ public class ObjectManager {
 	private ArrayList<Potion> potions;
 	private ArrayList<Bullet> bullets;
 	private ArrayList<Power> powers;
+	private  int sizeEnemy = 5;
 	
+
 	public ObjectManager(Playing playing) {
 		this.playing = playing;
 		loadImgs();
@@ -37,7 +39,8 @@ public class ObjectManager {
 	
 	public void addEnemy() {
 		int yPos = 0;
-		int sizeEnemy = 10;
+		if(sizeEnemy >= 20)
+			sizeEnemy = 20;
 		while(potions.size() < sizeEnemy && yPos < Game.GAME_HEIGHT - 200) {
 			Random ramdom = new Random();
 			int xDefault = 0;//ramdom.nextInt(0, 50);
@@ -49,7 +52,7 @@ public class ObjectManager {
 				xPos = ramdom.nextInt(1,10);
 				xDefault = xDefault + xPos * 75;
 				if(xPos % 2 == 1)
-					type =RED_POTION;
+					type = RED_POTION;
 				else type = BLUE_POTION;
 				potions.add(new Potion(xDefault ,yPos, type));
 				
@@ -103,10 +106,22 @@ public class ObjectManager {
 			}
 		}
 		}
+		for(Bullet b : bullets) {
+			if(b.isActive() && b.getDir() == 1) {
+				//b.updatePos();
+				for(Potion p : potions)
+					if(b.getHitbox().intersects(p.getHitbox()) && p.isActive()) {
+						Random ran = new Random();
+						if(ran.nextInt(1, 5) == 3)
+							powers.add(new Power((int)p.getHitbox().x - 10, (int)p.getHitbox().y, -1));
+						b.setActive(false);
+						p.setActive(false);
+					}
+			}
+		}
 	}
 	
 	private void updateBullet(int[][] lvlData, Player player) {
-		Random random = new Random();
 		for(Bullet b : bullets) {
 			if(b.isActive()) {
 				b.updatePos();
@@ -115,16 +130,10 @@ public class ObjectManager {
 					playing.getGame().getAudioPlayer().playEffect(AudioPlayer.JUMP);
 					player.changeHealth(-20);
 				}
-				for(Potion p : potions)
-				if(b.getHitbox().intersects(p.getHitbox()) && p.isActive() && b.getDir() == 1) {
-					if(random.nextInt(1,6) == 1)
-						powers.add(new Power((int)p.getHitbox().x - 10, (int)p.getHitbox().y, -1));
-					b.setActive(false);
-					p.setActive(false);
-					
-				}
 			}
 		}
+		
+
 	}
 	
 	public void updatePower(int[][] lvlData, Player player) {
@@ -174,7 +183,7 @@ public class ObjectManager {
 				g.drawImage(cannonBallImg, (int) (b.getHitbox().x  - xLvlOffset), (int) (b.getHitbox().y), POTION_WIDTH, POTION_HEIGHT,
 						null);
 				else
-					g.drawImage(enemyBallImg, (int) (b.getHitbox().x  - xLvlOffset), (int) (b.getHitbox().y), POTION_WIDTH, POTION_HEIGHT,
+					g.drawImage(enemyBallImg, (int) (b.getHitbox().x  - xLvlOffset), (int) (b.getHitbox().y),(int) (POTION_WIDTH *1.5),(int)(POTION_HEIGHT * 1.5),
 							null);
 			}		
 	}
@@ -204,4 +213,11 @@ public class ObjectManager {
 	}
 	
 	
+	public int getSizeEnemy() {
+		return sizeEnemy;
+	}
+
+	public void setSizeEnemy(int sizeEnemy) {
+		this.sizeEnemy += sizeEnemy;
+	}
 }
