@@ -185,7 +185,7 @@ public class ObjectManager {
 	public void loadObjects() {
 		potions  = new ArrayList<>();		
 		bullets = new ArrayList<Bullet>();
-		bullets.clear();
+		powers = new ArrayList<Power>();
 		addEnemy();
 	}
 	public void resetAllObjects() {
@@ -193,7 +193,7 @@ public class ObjectManager {
 		for (Potion p : potions)
 			p.reset();
 		bullets.clear();
-		
+		powers.clear();
 	}
 	
 	public boolean checkComplete() {
