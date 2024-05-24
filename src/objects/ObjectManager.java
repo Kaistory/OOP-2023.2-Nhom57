@@ -1,6 +1,9 @@
 package objects;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,11 +22,13 @@ import static utilz.Constants.ObjectConstants.*;
 public class ObjectManager {
 	private Playing playing;
 	private BufferedImage[][] potionImgs;
-	private BufferedImage cannonBallImg, enemyBallImg, powerImg;
+	private BufferedImage enemyBallImg, powerImg;
+	private BufferedImage cannonBallImg , cannonBallImg1;
 	private ArrayList<Potion> potions;
 	private ArrayList<Bullet> bullets;
 	private ArrayList<Power> powers;
 	private  int sizeEnemy = 5;
+	private int score;
 	
 
 	public ObjectManager(Playing playing) {
@@ -34,6 +39,8 @@ public class ObjectManager {
 		bullets = new ArrayList<>();
 		
 		powers = new ArrayList<>();
+		
+		score = 0;
 		addEnemy();
 	}
 	
@@ -80,6 +87,7 @@ public class ObjectManager {
 			for (int i = 0; i < potionImgs[j].length; i++)
 				potionImgs[j][i] = potionSprite.getSubimage(200 * j, 200 * i, 200, 200);		
 		cannonBallImg = LoadSave.GetSpriteAtlas(LoadSave.CANNON_BALL);
+		cannonBallImg1 = LoadSave.GetSpriteAtlas(LoadSave.CANNON_BALL_2);
 		enemyBallImg = LoadSave.GetSpriteAtlas(LoadSave.CANNON_BALL_1);
 		powerImg = LoadSave.GetSpriteAtlas(LoadSave.POWER);
 	}
@@ -114,6 +122,7 @@ public class ObjectManager {
 						Random ran = new Random();
 						if(ran.nextInt(1, 5) == 3)
 							powers.add(new Power((int)p.getHitbox().x - 10, (int)p.getHitbox().y, -1));
+						score += 1;
 						b.setActive(false);
 						p.setActive(false);
 					}
@@ -154,7 +163,9 @@ public class ObjectManager {
 		drawPotion(g, xLvlOffset);
 		drawBullet(g, xLvlOffset);
 		drawPower(g, xLvlOffset);
-		
+		g.setColor(Color.white);
+		g.setFont(new Font("TimesRoman", Font.PLAIN | Font.BOLD, 20));
+		g.drawString("Score: " + score, 10, 820);
 	}
 
 	private void drawPower(Graphics g, int xLvlOffset) {
@@ -179,9 +190,12 @@ public class ObjectManager {
 		// TODO Auto-generated method stub
 		for (Bullet b : bullets)
 			if (b.isActive()) {
-				if(b.getDir() == 1)
-				g.drawImage(cannonBallImg, (int) (b.getHitbox().x  - xLvlOffset), (int) (b.getHitbox().y), POTION_WIDTH, POTION_HEIGHT,
-						null);
+				if(b.getDir() == 1) { 
+				if(score < 5) {
+					g.drawImage(cannonBallImg, (int) (b.getHitbox().x  - xLvlOffset), (int) (b.getHitbox().y), POTION_WIDTH, POTION_HEIGHT,
+						null);}
+				else g.drawImage(cannonBallImg1, (int) (b.getHitbox().x  - xLvlOffset), (int) (b.getHitbox().y), POTION_WIDTH, POTION_HEIGHT,
+						null);}
 				else
 					g.drawImage(enemyBallImg, (int) (b.getHitbox().x  - xLvlOffset), (int) (b.getHitbox().y),(int) (POTION_WIDTH *1.5),(int)(POTION_HEIGHT * 1.5),
 							null);
@@ -203,6 +217,7 @@ public class ObjectManager {
 			p.reset();
 		bullets.clear();
 		powers.clear();
+		score = 0;
 	}
 	
 	public boolean checkComplete() {

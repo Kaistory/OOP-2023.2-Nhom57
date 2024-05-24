@@ -27,6 +27,8 @@ public class LoadSave {
 	public static final String POTION_ATLAS = "ememy_ship_1.png";
 	public static final String CANNON_BALL = "59.png";
 	public static final String CANNON_BALL_1 = "22.png";
+	public static final String CANNON_BALL_2 = "44.png";
+	public static final String CANNON_BALL_3 = "34.png";
 	public static final String COMPLETED_IMG = "completed_sprite_ship1.png";
 	public static final String DEATH_SCREEN = "death_screen_ship.png";
 	public static final String STATUS_BAR = "health_power_bar_ship.png";
