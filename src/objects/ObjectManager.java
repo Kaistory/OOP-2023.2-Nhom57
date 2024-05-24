@@ -114,6 +114,7 @@ public class ObjectManager {
 			if(p.getHitbox().intersects(player.getHitbox())) {
 				p.setActive(false);
 				playing.getGame().getAudioPlayer().playEffect(AudioPlayer.JUMP);
+				score -= 1;
 				player.changeHealth(-20);
 				
 			}
@@ -143,6 +144,7 @@ public class ObjectManager {
 				if(b.getHitbox().intersects(player.getHitbox()) && b.getDir() == -1) {
 					b.setActive(false);
 					playing.getGame().getAudioPlayer().playEffect(AudioPlayer.JUMP);
+					score -= 1;
 					player.changeHealth(-20);
 				}
 			}
