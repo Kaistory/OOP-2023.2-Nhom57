@@ -14,7 +14,9 @@ public class Bullet {
 	private Rectangle2D.Float hitbox;
 	private int dir;
 	private boolean active = true, reload = true;
-	private float SPEED = 1f;
+	public static float SPEED = 1f;
+	
+
 	protected static int Tick;
 
 	public Bullet(int x, int y, int dir) {
@@ -44,15 +46,6 @@ public class Bullet {
 			Tick = 11;
 	}
 	
-	public static boolean canFight() {
-		if(Bullet.Tick == 11)
-			{
-				Bullet.Tick = 0;
-				return true;
-			}
-		return false;
-	}
-	
 	public void setPos(int x, int y) {
 		hitbox.x = x;
 		hitbox.y = y;
@@ -73,5 +66,12 @@ public class Bullet {
 	public int getDir() {
 		return dir;
 	}
+	public void setSPEED(float sPEED) {
+		SPEED = sPEED;
+	}
+
+	public static void changeSPEED(float sp) {
+		SPEED = sp;
 		
+	}
 }

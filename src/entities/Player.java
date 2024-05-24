@@ -95,6 +95,7 @@ public class Player extends Entity {
 				playing.getGame().getAudioPlayer().stopSong();
 				playing.getGame().getAudioPlayer().playEffect(AudioPlayer.GAMEOVER);
 				playing.setGameOver(true);
+				playing.getObjectManager().setScore(0);
 //			}
 //			else updateAnimationTick();
 			return;
